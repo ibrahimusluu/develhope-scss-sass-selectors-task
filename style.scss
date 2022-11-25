@@ -1,0 +1,73 @@
+/* QUESTION from PLATFORM:
+Modify the exercise 3 code about functions using the parent selector & for nested classes. Style the h2 that will have the same rules of h1,
+and an additional 1rem padding and a red border. In order to style the h1 and h2 use the extend method.
+*/
+
+/*
+Suggestion:
+%text {
+    ...
+}
+
+.h1-class {
+    @extend %text;
+}
+*/
+
+@use "sass:color";
+@use "sass:list";
+
+$scss-font-size: 24px; 
+$scss-red: color.adjust(red);
+$scss-blue: color.adjust(blue);
+$scss-green: color.adjust(green);
+// $scss-font-size: list.append(24px); // here didn't work
+
+@mixin article($color, $border-color, $font-size: 1rem) {
+    border: 1px solid $border-color;
+    padding: 20px;
+    div {
+        &:first-child {
+            text-align: center;
+            h1 {
+                margin: 0;
+                color: $color;
+                text-decoration: underline;
+                text-decoration-color: $scss-blue;
+            }
+            h2 {
+                @extend h1;
+                margin: 2rem;
+                span {
+                    padding: 1rem;
+                    border: 1px solid $scss-red;
+                }
+            }
+        }
+        &.paragraphs {
+            display: flex;
+            text-align: center;
+            p {
+                border: 1px solid $color;
+                padding: 35px;
+                &:nth-child(odd) {
+                    color: $scss-blue;
+                }
+                &:nth-child(even) {
+                    color: $border-color;
+                }
+            }
+        }
+        &:last-child {
+            border: 1px solid $scss-blue;
+            font-size: $font-size;
+            color: $color;
+            text-align: center;
+            padding: 20px;
+        }
+    }
+}
+
+body {
+    @include article($scss-green, $scss-red, $scss-font-size);
+}
